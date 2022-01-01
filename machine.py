@@ -1,0 +1,11 @@
+states=["user", "lobby", "roster" , "schedule" , "playerstats"],
+    transitions=[
+        {"trigger": "advance", "source": "user", "dest": "lobby", "conditions": "is_going_to_lobby" },
+        {"trigger": "advance", "source": "roster", "dest": "playerstats", "conditions": "is_going_to_lobby" },
+        {"trigger": "advance", "source": "lobby", "dest": "roster", "conditions": "is_going_to_roster" },
+        {"trigger": "advance", "source": "lobby", "dest": "schedule", "conditions": "is_going_to_schedule" },
+        {"trigger": "go_back", "source": ["playerstats", "schedule"], "dest": "lobby"},
+    ],
+    initial="user",
+    auto_transitions=False,
+    show_conditions=True,
