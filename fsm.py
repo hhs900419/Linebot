@@ -1,8 +1,9 @@
 from transitions.extensions import GraphMachine
 
 from utils import send_text_message, send_button_message
-from utils import showoffpages, showhighlightlinks, showroster, StephenCurryStats, KlayThompsonStats
-from utils import showcurryinfo, showklayinfo
+from utils import showoffpages, showhighlightlinks, showroster
+from utils import StephenCurryStats, KlayThompsonStats, Draymondstats, Wigginsstats
+from utils import showcurryinfo, showklayinfo, showdrayinfo, showwigsinfo
 
 
 
@@ -76,7 +77,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         img = "https://www.basketball-reference.com/req/202106291/images/players/curryst01.jpg"
         title = 'Stephen Curry'
-        uptext = 'PG #30\nGreatest Shooter of All-time\n史上最強順風球王~~~\n'
+        uptext = 'PG #30 Greatest Shooter of All-time\n史上最強順風球王~~~\n'
         labels = ['Player Stats', 'Player Info', 'Back to Roster']
         texts = ['Player Stats', 'Player Info', 'Back to Roster']
         send_button_message(reply_token, img, title, uptext, labels, texts)
@@ -115,7 +116,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         img = "https://www.basketball-reference.com/req/202106291/images/players/thompkl01.jpg"
         title = 'Klay Thompson'
-        uptext = 'SG #11\nElite Spot up Shooter\nKT要回歸了!\n'
+        uptext = 'SG #11 Splash Brothers\nElite Spot up Shooter\n終於要回歸了!\n'
         labels = ['Player Stats', 'Player Info', 'Back to Roster']
         texts = ['Player Stats', 'Player Info', 'Back to Roster']
         send_button_message(reply_token, img, title, uptext, labels, texts)
@@ -140,8 +141,81 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         showklayinfo(reply_token)
 
-    # def on_exit_state2(self):
-    #     print("Leaving state2")
-
+    #Draymond Green
+    def is_going_to_Draymond(seif, event):
+        text = event.message.text
+        return text.lower() == "draymond green"
     
+    def is_going_to_backdray(self, event):
+        text = event.message.text
+        return text.lower() == "back"
+
+    def on_enter_Draymond(self, event):
+        print("I'm entering DR")
+        reply_token = event.reply_token
+        img = "https://www.basketball-reference.com/req/202106291/images/players/greendr01.jpg"
+        title = 'Draymond Green'
+        uptext = 'PF/C #23 Team Defensive Core\n嘴到你媽臉都綠了~~\n有種吹我T阿!\n'
+        labels = ['Player Stats', 'Player Info', 'Back to Roster']
+        texts = ['Player Stats', 'Player Info', 'Back to Roster']
+        send_button_message(reply_token, img, title, uptext, labels, texts)
+
+    def is_going_to_draystats(seif, event):
+        print("is going to DR23")
+        text = event.message.text
+        return text.lower() == "player stats"
+    
+    def on_enter_draystats(self, event):
+        print("I'm entering DR23")
+        reply_token = event.reply_token
+        Draymondstats(reply_token)
+
+    def is_going_to_drayinfo(seif, event):
+        print("is going to DR23info")
+        text = event.message.text
+        return text.lower() == "player info"
+    
+    def on_enter_drayinfo(self, event):
+        print("I'm entering DR23info")
+        reply_token = event.reply_token
+        showdrayinfo(reply_token)
+
+    #Andrew Wiggins
+    def is_going_to_Wiggins(seif, event):
+        text = event.message.text
+        return text.lower() == "andrew wiggins"
+    
+    def is_going_to_backwig(self, event):
+        text = event.message.text
+        return text.lower() == "back"
+
+    def on_enter_Wiggins(self, event):
+        print("I'm entering WG")
+        reply_token = event.reply_token
+        img = "https://www.basketball-reference.com/req/202106291/images/players/wiggian01.jpg"
+        title = 'Andrew Wiggins'
+        uptext = 'SF #22\n籃球公務員aka控分大師~~\n枸杞好吃又養生!\n'
+        labels = ['Player Stats', 'Player Info', 'Back to Roster']
+        texts = ['Player Stats', 'Player Info', 'Back to Roster']
+        send_button_message(reply_token, img, title, uptext, labels, texts)
+
+    def is_going_to_wigstats(seif, event):
+        print("is going to WG22")
+        text = event.message.text
+        return text.lower() == "player stats"
+    
+    def on_enter_wigstats(self, event):
+        print("I'm entering WG22")
+        reply_token = event.reply_token
+        Wigginsstats(reply_token)
+
+    def is_going_to_wiginfo(seif, event):
+        print("is going to WG22info")
+        text = event.message.text
+        return text.lower() == "player info"
+    
+    def on_enter_wiginfo(self, event):
+        print("I'm entering WG22info")
+        reply_token = event.reply_token
+        showwigsinfo(reply_token)
     

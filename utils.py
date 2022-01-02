@@ -117,7 +117,7 @@ def showroster(reply_token):
     result += "Enter star player name to get more details\n"
     send_text_message(reply_token, result)
 
-
+#Curry
 def StephenCurryStats(reply_token):
     url = 'https://www.basketball-reference.com/players/c/curryst01.html'
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
@@ -159,6 +159,7 @@ def StephenCurryStats(reply_token):
     CareerStats += ('\tFT: {}  FTA: {}  FT%: {:.1f}%\n' .format(c_tds[13].text, c_tds[14].text, c_ft))
 
     result = "\nStephen Curry" + SeasonStats + CareerStats
+    result += "\n(enter [back] to go back)\n"
     print(result)
     send_text_message(reply_token, result)
 
@@ -168,8 +169,10 @@ def showcurryinfo(reply_token):
     msg += "PG\t6-2, 185lb (188cm, 83kg) \n"
     msg += "12th Season\n Draft: Golden State Warriors, 1st round (7th pick, 7th overall), 2009 NBA Draft\n"
     msg += "Awards:\n\t3x NBA Champ\n\t7x All-star\n\t7x All-NBA\n\t2x MVP\n\t2x Scoring Champ\t\n2015~2016 STL Champ\n\t2009~2010 All-rookie\n\t NBA 75th Anniv.Team\n"
+    msg += "\n(enter [back] to go back)\n"
     send_text_message(reply_token, msg)
 
+#Klay
 def KlayThompsonStats(reply_token):
     playername = "Klay Thompson"
     url = 'https://www.basketball-reference.com/players/t/thompkl01.html'
@@ -196,6 +199,7 @@ def KlayThompsonStats(reply_token):
     CareerStats += ('\tFT: {}  FTA: {}  FT%: {:.1f}%\n' .format(c_tds[13].text, c_tds[14].text, c_ft))
 
     result = "\n" + playername + SeasonStats + CareerStats
+    result += "\n(enter [back] to go back)\n"
     print(result)
     send_text_message(reply_token, result)
 
@@ -205,4 +209,117 @@ def showklayinfo(reply_token):
     info += "8th Season\n Draft: Golden State Warriors, 1st round (11th pick, 11th overall), 2011 NBA Draft\n"
     info += "Award:\n"
     info += "\t3x NBA Champ\n\t5x All-star\n\t2x All-NBA\n\t2018~2019 All-defensive\n\t2011~2012 All-rookie\n"
+    info += "\n(enter [back] to go back)\n"
     send_text_message(reply_token, info)
+
+#Dray
+def Draymondstats(reply_token):
+    playername = "Draymond Green"
+    url = 'https://www.basketball-reference.com/players/g/greendr01.html'
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+    source = requests.get(url, headers=headers).text
+    soup = BeautifulSoup(source, 'html.parser')
+
+    seasonstat = soup.find('tr', class_='full_table', id='per_game.2022')
+    tds = seasonstat.find_all('td', class_='right')
+    print(tds)
+    SeasonStats = "\n---------Season 2021-2022---------\n"
+    print(len(tds))
+    for i in range(0, len(tds)):
+        print(tds[i].getText(),end=" ")
+    
+    fg = float(tds[5].text)*100
+    threep = float(tds[8].text)*100
+    ft = float(tds[15].text)*100
+
+    SeasonStats += ('Games Played: {} ({} mins/game)\n' .format(tds[0].getText(), tds[2].getText()))
+    SeasonStats += ('Game Stats:\n\t{} PTS\n\t{} AST\n\t{} REB\n\t{} STL\n\t{} BLK\n' .format(tds[24].text, tds[19].text, tds[18].text, tds[20].text, tds[21].text))
+    SeasonStats += ('Shooting Percentage:\n\tFG: {}  FGA: {}  FG%: {}%\n' .format(tds[3].text, tds[4].text, fg))
+    SeasonStats += ('\t3P: {}  3PA: {}  3P%: {}%\n' .format(tds[6].text, tds[7].text, threep))
+    SeasonStats += ('\tFT: {}  FTA: {}  FT%: {:.1f}%\n' .format(tds[13].text, tds[14].text, ft))
+
+
+    careerstat = soup.find('tfoot')
+    c_tds = careerstat.find_all('td', class_='right')
+    
+    CareerStats = "\n-----------Career Stats-----------\n"
+    
+    c_fg = float(c_tds[5].text)*100
+    c_threep = float(c_tds[8].text)*100
+    c_ft = float(c_tds[15].text)*100
+
+    CareerStats += ('Games Played: {} ({} mins/game)\n' .format(c_tds[0].getText(), c_tds[2].getText()))
+    CareerStats += ('Game Stats:\n\t{} PTS\n\t{} AST\n\t{} REB\n\t{} STL\n\t{} BLK\n' .format(c_tds[24].text, c_tds[19].text, c_tds[18].text, c_tds[20].text, c_tds[21].text))
+    CareerStats += ('Shooting Percentage:\n\tFG: {}  FGA: {}  FG%: {}%\n' .format(c_tds[3].text, c_tds[4].text, c_fg))
+    CareerStats += ('\t3P: {}  3PA: {}  3P%: {}%\n' .format(c_tds[6].text, c_tds[7].text, c_threep))
+    CareerStats += ('\tFT: {}  FTA: {}  FT%: {:.1f}%\n' .format(c_tds[13].text, c_tds[14].text, c_ft))
+
+    result = "\n" + playername + SeasonStats + CareerStats
+    result += "\n(enter [back] to go back)\n"
+    print(result)
+    send_text_message(reply_token, result)
+
+def showdrayinfo(reply_token):
+    msg = ""
+    msg += "Draymond Green #23\n"
+    msg += "PF/C\t6-6, 230lb (198cm, 104kg) \n"
+    msg += "9th Season\n Draft: Golden State Warriors, 2nd round (5th pick, 35th overall), 2012 NBA Draft\n"
+    msg += "Awards:\n\t3x NBA Champ\n\t3x All-star\n\t2x All-NBA\n\t6x All-Defensive\n\t2016~2017 STL Champ\n\t2016~2017 DPOY\n"
+    msg += "\n(enter [back] to go back)\n"
+    send_text_message(reply_token, msg)
+
+#Wiggs
+def Wigginsstats(reply_token):
+    playername = "Andrew Wiggins"
+    url = 'https://www.basketball-reference.com/players/w/wiggian01.html'
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+    source = requests.get(url, headers=headers).text
+    soup = BeautifulSoup(source, 'html.parser')
+
+    seasonstat = soup.find('tr', class_='full_table', id='per_game.2022')
+    tds = seasonstat.find_all('td', class_='right')
+    print(tds)
+    SeasonStats = "\n---------Season 2021-2022---------\n"
+    print(len(tds))
+    for i in range(0, len(tds)):
+        print(tds[i].getText(),end=" ")
+    
+    fg = float(tds[5].text)*100
+    threep = float(tds[8].text)*100
+    ft = float(tds[15].text)*100
+
+    SeasonStats += ('Games Played: {} ({} mins/game)\n' .format(tds[0].getText(), tds[2].getText()))
+    SeasonStats += ('Game Stats:\n\t{} PTS\n\t{} AST\n\t{} REB\n\t{} STL\n\t{} BLK\n' .format(tds[24].text, tds[19].text, tds[18].text, tds[20].text, tds[21].text))
+    SeasonStats += ('Shooting Percentage:\n\tFG: {}  FGA: {}  FG%: {}%\n' .format(tds[3].text, tds[4].text, fg))
+    SeasonStats += ('\t3P: {}  3PA: {}  3P%: {}%\n' .format(tds[6].text, tds[7].text, threep))
+    SeasonStats += ('\tFT: {}  FTA: {}  FT%: {:.1f}%\n' .format(tds[13].text, tds[14].text, ft))
+
+
+    careerstat = soup.find('tfoot')
+    c_tds = careerstat.find_all('td', class_='right')
+    
+    CareerStats = "\n-----------Career Stats-----------\n"
+    
+    c_fg = float(c_tds[5].text)*100
+    c_threep = float(c_tds[8].text)*100
+    c_ft = float(c_tds[15].text)*100
+
+    CareerStats += ('Games Played: {} ({} mins/game)\n' .format(c_tds[0].getText(), c_tds[2].getText()))
+    CareerStats += ('Game Stats:\n\t{} PTS\n\t{} AST\n\t{} REB\n\t{} STL\n\t{} BLK\n' .format(c_tds[24].text, c_tds[19].text, c_tds[18].text, c_tds[20].text, c_tds[21].text))
+    CareerStats += ('Shooting Percentage:\n\tFG: {}  FGA: {}  FG%: {}%\n' .format(c_tds[3].text, c_tds[4].text, c_fg))
+    CareerStats += ('\t3P: {}  3PA: {}  3P%: {}%\n' .format(c_tds[6].text, c_tds[7].text, c_threep))
+    CareerStats += ('\tFT: {}  FTA: {}  FT%: {:.1f}%\n' .format(c_tds[13].text, c_tds[14].text, c_ft))
+
+    result = "\n" + playername + SeasonStats + CareerStats
+    result += "\n(enter [back] to go back)\n"
+    print(result)
+    send_text_message(reply_token, result)
+
+def showwigsinfo(reply_token):
+    msg = ""
+    msg += "Andrew Wiggins #22\n"
+    msg += "SF\t6-7, 197lb (201cm, 89kg) \n"
+    msg += "7th Season\n Draft: Cleveland Cavaliers, 1st round (1st pick, 1st overall), 2014 NBA Draft\n"
+    msg += "Awards:\n\t2014-2015 All-Rookie\n\t2014-2015 ROY\n"
+    msg += "\n(enter [back] to go back)\n"
+    send_text_message(reply_token, msg)

@@ -12,11 +12,12 @@ from utils import send_text_message
 
 load_dotenv()
 
+
 machine = TocMachine(
     states=["user", "menu", "roster", "highlights", "official",
-        "StephenCurry", "KlayThompson",
-        "currystats", "klaystats",
-        "curryinfo", "klayinfo"],
+        "StephenCurry", "KlayThompson", "Draymond", "Wiggins",
+        "currystats", "klaystats", "draystats" , "wigstats",
+        "curryinfo", "klayinfo" , "drayinfo" , "wiginfo"],
     transitions=[
         {
             "trigger": "advance", 
@@ -48,20 +49,16 @@ machine = TocMachine(
             "source": "roster", 
             "dest": "KlayThompson", 
             "conditions": "is_going_to_KlayThompson" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
-        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        {
+            "trigger": "advance", 
+            "source": "roster", 
+            "dest": "Draymond", 
+            "conditions": "is_going_to_Draymond" },
+        {
+            "trigger": "advance", 
+            "source": "roster", 
+            "dest": "Wiggins", 
+            "conditions": "is_going_to_Wiggins" },
         {
             "trigger": "advance", 
             "source": "StephenCurry", 
@@ -84,6 +81,26 @@ machine = TocMachine(
             "conditions": "is_going_to_klayinfo" },
         {
             "trigger": "advance", 
+            "source": "Draymond", 
+            "dest": "draystats", 
+            "conditions": "is_going_to_draystats" },
+        {
+            "trigger": "advance", 
+            "source": "Draymond", 
+            "dest": "drayinfo", 
+            "conditions": "is_going_to_drayinfo" },
+        {
+            "trigger": "advance", 
+            "source": "Wiggins", 
+            "dest": "wigstats", 
+            "conditions": "is_going_to_wigstats" },
+        {
+            "trigger": "advance", 
+            "source": "Wiggins", 
+            "dest": "wiginfo", 
+            "conditions": "is_going_to_wiginfo" },
+        {
+            "trigger": "advance", 
             "source": ["currystats", "curryinfo"],
             "dest": "StephenCurry", 
             "conditions": "is_going_to_backcurry" },
@@ -92,19 +109,31 @@ machine = TocMachine(
             "source": ["klaystats", "klayinfo"],
             "dest": "KlayThompson", 
             "conditions": "is_going_to_backklay" },
+             {
+            "trigger": "advance", 
+            "source": ["draystats", "drayinfo"],
+            "dest": "Draymond", 
+            "conditions": "is_going_to_backdray" },
+             {
+            "trigger": "advance", 
+            "source": ["wigstats", "wiginfo"],
+            "dest": "Wiggins", 
+            "conditions": "is_going_to_backwig" },
         {
             "trigger": "advance", 
-            "source": ["StephenCurry", "KlayThompson"], 
+            "source": ["StephenCurry", "KlayThompson" , "Draymond", "Wiggins"], 
             "dest": "roster", 
             "conditions": "is_going_to_backroster" },
         {
             "trigger": "advance", 
             "source": [
                 "StephenCurry", "currystats", "curryinfo",
-                "KlayThompson", "klaystats", "klayinfo" ,"roster", "highlights", "official"], 
+                "KlayThompson", "klaystats", "klayinfo" ,
+                "Draymond", "draystats", "drayinfo" ,
+                "Wiggins", "wigstats", "wiginfo" ,
+                "roster", "highlights", "official"], 
             "dest": "menu", 
             "conditions": "is_going_to_backmenu" },
-        # {"trigger": "go_back", "source": ["playerstats", "currystats"], "dest": "menu"},
     ],
     initial="user",
     auto_transitions=False,
