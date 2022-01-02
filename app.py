@@ -12,48 +12,106 @@ from utils import send_text_message
 
 load_dotenv()
 
-
 machine = TocMachine(
-    states=["user", "lobby", "roster" , "schedule" , "playerstats"],
+    states=["user", "menu", "roster", "highlights", "official",
+        "StephenCurry", "KlayThompson",
+        "currystats", "klaystats",
+        "curryinfo", "klayinfo"],
     transitions=[
-        {"trigger": "advance", "source": "user", "dest": "lobby", "conditions": "is_going_to_lobby" },
-        {"trigger": "advance", "source": "lobby", "dest": "roster", "conditions": "is_going_to_roster" },
-        {"trigger": "advance", "source": "roster", "dest": "playerstats", "conditions": "is_going_to_playerstats" },
-        {"trigger": "advance", "source": "lobby", "dest": "schedule", "conditions": "is_going_to_schedule" },
-        {"trigger": "go_back", "source": ["playerstats", "schedule"], "dest": "lobby"},
+        {
+            "trigger": "advance", 
+            "source": "user", 
+            "dest": "menu", 
+            "conditions": "is_going_to_menu" },
+        {
+            "trigger": "advance", 
+            "source": "menu", 
+            "dest": "roster", 
+            "conditions": "is_going_to_roster" },
+        {
+            "trigger": "advance", 
+            "source": "menu", 
+            "dest": "highlights", 
+            "conditions": "is_going_to_highlights" },
+        {
+            "trigger": "advance", 
+            "source": "menu", 
+            "dest": "official", 
+            "conditions": "is_going_to_official" },
+        {
+            "trigger": "advance", 
+            "source": "roster", 
+            "dest": "StephenCurry", 
+            "conditions": "is_going_to_StephenCurry" },
+        {
+            "trigger": "advance", 
+            "source": "roster", 
+            "dest": "KlayThompson", 
+            "conditions": "is_going_to_KlayThompson" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        # {"trigger": "advance", "source": "roster", "dest": "StephenCurry", "conditions": "is_going_to_StephenCurry" },
+        {
+            "trigger": "advance", 
+            "source": "StephenCurry", 
+            "dest": "currystats", 
+            "conditions": "is_going_to_currystats" },
+        {
+            "trigger": "advance", 
+            "source": "StephenCurry", 
+            "dest": "curryinfo", 
+            "conditions": "is_going_to_curryinfo" },
+        {
+            "trigger": "advance", 
+            "source": "KlayThompson", 
+            "dest": "klaystats", 
+            "conditions": "is_going_to_klaystats" },
+        {
+            "trigger": "advance", 
+            "source": "KlayThompson", 
+            "dest": "klayinfo", 
+            "conditions": "is_going_to_klayinfo" },
+        {
+            "trigger": "advance", 
+            "source": ["currystats", "curryinfo"],
+            "dest": "StephenCurry", 
+            "conditions": "is_going_to_backcurry" },
+        {
+            "trigger": "advance", 
+            "source": ["klaystats", "klayinfo"],
+            "dest": "KlayThompson", 
+            "conditions": "is_going_to_backklay" },
+        {
+            "trigger": "advance", 
+            "source": ["StephenCurry", "KlayThompson"], 
+            "dest": "roster", 
+            "conditions": "is_going_to_backroster" },
+        {
+            "trigger": "advance", 
+            "source": [
+                "StephenCurry", "currystats", "curryinfo",
+                "KlayThompson", "klaystats", "klayinfo" ,"roster", "highlights", "official"], 
+            "dest": "menu", 
+            "conditions": "is_going_to_backmenu" },
+        # {"trigger": "go_back", "source": ["playerstats", "currystats"], "dest": "menu"},
     ],
     initial="user",
     auto_transitions=False,
     show_conditions=True,
 )
 
-# machine = TocMachine(
-#     states=["user", "state1", "state2","state3"],
-#     transitions=[
-#         {
-#             "trigger": "advance",
-#             "source": "user",
-#             "dest": "state1",
-#             "conditions": "is_going_to_state1",
-#         },
-#         {
-#             "trigger": "advance",
-#             "source": "user",
-#             "dest": "state2",
-#             "conditions": "is_going_to_state2",
-#         },
-#         {
-#             "trigger": "advance",
-#             "source": "state2",
-#             "dest": "state3",
-#             "conditions": "is_going_to_state3",
-#         },
-#         {"trigger": "go_back", "source": ["state1","state3"], "dest": "user"},
-#     ],
-#     initial="user",
-#     auto_transitions=False,
-#     show_conditions=True,
-# )
+
 
 app = Flask(__name__, static_url_path="")
 
